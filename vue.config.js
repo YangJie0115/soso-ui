@@ -9,7 +9,8 @@ module.exports = {
     },
     // 组件样式内联
     css: {
-      extract: false
+      // extract: false,
+      sourceMap: true,
     },
     // 扩展 webpack 配置，使 packages 加入编译
     chainWebpack: config => {

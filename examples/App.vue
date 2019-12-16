@@ -1,7 +1,20 @@
 <template>
   <div id="app">
     1111
-    <s-button type="primary" fillet>主要按钮</s-button>
+    <s-button type="primary" fillet @click="dialogTableVisible=true">主要按钮</s-button>
+    <s-dialog 
+      title="这是一个dialog"
+      width="800"
+      :sVisible.sync="dialogTableVisible"
+      >
+      <div slot="sMain">
+          111
+      </div>
+      <div slot="sFoot">
+          <s-button type="primary" @click="dialogTableVisible=false">确定</s-button>
+          <s-button  @click="dialogTableVisible=false">取消</s-button>
+      </div>
+  </s-dialog>
   </div>
 </template>
 
@@ -11,6 +24,7 @@ export default {
   name: 'App',
   data(){
     return{
+      dialogTableVisible:false
     }
   },
   methods:{
@@ -22,18 +36,5 @@ export default {
 </script>
 
 <style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  
-  position: fixed;
-  top: 0;
-  left: 0;
-  right:0;
-  bottom:0;
-  overflow-y:auto;
-}
+
 </style>

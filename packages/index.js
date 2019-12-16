@@ -42,9 +42,47 @@ const components = [
   BreadcrumbItem,
 ]
 
-Vue.config.productionTip = false
-// Vue.component("s-button", Button)
+// 存储组件列表
+// 定义 install 方法，接收 Vue 作为参数。如果使用 use 注册插件，则所有的组件都将被注册
+const install = function(Vue) {
+  // 判断是否安装
+  if (install.installed) return;
+  // 遍历注册全局组件
+  components.forEach(component => {
+    Vue.component(component.name, component)
+  });
+};
+// 判断是否是直接引入文件
+if (typeof window !== "undefined" && window.Vue) {
+  install(window.Vue);
+}
 
+
+
+
+
+
+
+
+Vue.config.productionTip = false
+Vue.prototype.dispatch=function(componentName, eventName, params) {
+  var parent = this.$parent || this.$root;
+  var name = parent.$options.componentName;
+  //寻找父级，如果父级不是符合的组件名，则循环向上查找
+  while (parent && (!name || name !== componentName)) {
+    parent = parent.$parent;
+  
+    if (parent) {
+      name = parent.$options.componentName;
+    }
+  }
+  
+  //找到符合组件名称的父级后，触发其事件。整体流程类似jQuery的closest方法
+  if (parent) {
+    parent.$emit.apply(parent, [eventName].concat(params));
+  }
+ }
+Vue.prototype.$message = Message;
 Vue.prototype.dispatch=function(componentName, eventName, params) {
   var parent = this.$parent || this.$root;
   var name = parent.$options.componentName;
@@ -61,40 +99,10 @@ Vue.prototype.dispatch=function(componentName, eventName, params) {
     parent.$emit.apply(parent, [eventName].concat(params));
   }
  }
-
-
-
-const install = function(Vue) {
-  components.forEach(component => {
-    Vue.use(component)
-  })
-}
-Vue.prototype.$message = Message;
-
-// Vue.prototype.dispatch=function(componentName, eventName, params) {
-//   var parent = this.$parent || this.$root;
-//   var name = parent.$options.componentName;
-//   //寻找父级，如果父级不是符合的组件名，则循环向上查找
-//   while (parent && (!name || name !== componentName)) {
-//     parent = parent.$parent;
-  
-//     if (parent) {
-//       name = parent.$options.componentName;
-//     }
-//   }
-//   //找到符合组件名称的父级后，触发其事件。整体流程类似jQuery的closest方法
-//   if (parent) {
-//     parent.$emit.apply(parent, [eventName].concat(params));
-//   }
-//  }
  
 
 
 
-// install(Vue)
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue)
-}
 
 export default{
   Button,

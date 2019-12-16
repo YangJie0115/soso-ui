@@ -1,13 +1,13 @@
 {
   "name": "sosoeasy-ui",
-  "version": "1.1.1",
+  "version": "1.1.5",
   "private": false,
   "main": "packages/index.js",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name island1-ui --dest lib packages/index.js"
+    "lib": "vue-cli-service build --target lib --name so-ui --dest lib packages/index.js"
   },
   "dependencies": {
     "core-js": "^3.4.3",
